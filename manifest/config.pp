@@ -1,6 +1,6 @@
 #
 class nostromo_1_9_6_remote_command_execution::config {
-Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ], environment => [ 'http_proxy=172.22.0.51:3128', 'https_proxy=172.22.0.51:3128' ] }
+Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ]}
 
   user { 'nostromousr':
     ensure     => present,
@@ -15,10 +15,17 @@ Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ], environment =>
 
   # Copy the config file to /var/nostromo/conf/
   file { '/var/nostromo/conf/nhttpd.conf':
+    source  => '/home/unhcegila/puppet-modules/nostromo_1_9_6_remote_command_execution/files/nhttpd.conf',
+    owner   => 'nostromousr',
     require => Exec['make-nostromo-install'],
+    notify  => Exec['set-log-perms'],
   }
 
   # Set /var/nostromo/logs to 777
-
+  exec { 'set-log-dir-perms':
+    command => 'sudo chmod 777 /var/nostromo/logs',
+    require => File['/var/nostromo/conf/nhttpd.conf'],
+    notify  => File['/home/nostromousr/nostromo-1.9.6/src/nhttpd/nhttpd.service'],
+  }
   # Next steps in Service file
 }

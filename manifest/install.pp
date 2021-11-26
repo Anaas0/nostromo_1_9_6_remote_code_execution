@@ -60,6 +60,15 @@ class nostromo_1_9_6_remote_command_execution::install {
     cwd     => '/home/nostromousr/',
     command => 'sudo make install',
     require => Exec['make-nostromo'],
+    notify  => Exec['restart-networking'],
+  }
+
+  ############################################## ~PROXY SETTINGS UNDO START~ ##############################################
+
+  exec { 'restart-networking':
+    command => 'service networking restart',
+    require => Exec['make-nostromo-install'],
     notify  => Exec['/var/nostromo/conf/nhttpd.conf'],
   }
+  ##############################################  ~PROXY SETTINGS UNDO END~  ##############################################
 }

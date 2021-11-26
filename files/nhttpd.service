@@ -1,0 +1,15 @@
+[Unit]
+Description=Nostromo 1.9.6 Web Server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=nostromousr
+ExecStart=/home/nostromousr/nostromo-1.9.6/src/nhttpd/nhttpd
+WorkingDirectory=/home/nostromousr/nostromo-1.9.6/src/nhttpd/
+
+[Install]
+WantedBy=multi-user.target
