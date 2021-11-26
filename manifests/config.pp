@@ -18,7 +18,7 @@ Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ]}
     source  => '/home/unhcegila/puppet-modules/nostromo_1_9_6_remote_command_execution/files/nhttpd.conf',
     owner   => 'nostromousr',
     require => Exec['make-nostromo-install'],
-    notify  => Exec['set-log-perms'],
+    notify  => Exec['set-log-dir-perms'],
   }
 
   # Set /var/nostromo/logs to 777

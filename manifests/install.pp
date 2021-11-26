@@ -25,9 +25,11 @@ class nostromo_1_9_6_remote_command_execution::install {
   package { 'libssl-dev':
     ensure  => installed,
     require => Package['gcc'],
-    notify  => Package['nostromousr'],
+    notify  => User['nostromousr'],
   }
-  ensure_packages('make', 'gcc', 'libssl-dev')
+  ensure_packages('make')
+  ensure_packages('gcc')
+  ensure_packages('libssl-dev')
 
   # Move tar ball to /home/user/
   file { '/home/nostromousr/nostromo_1_9_6.tar.gz':
@@ -49,7 +51,7 @@ class nostromo_1_9_6_remote_command_execution::install {
 
   # Make the application
   exec { 'make-nostromo':
-    cwd     => '/home/nostromousr/',
+    cwd     => '/home/nostromousr/nostromo-1.9.6/',
     command => 'sudo make',
     require => Exec['mellow-file'],
     notify  => Exec['make-nostromo-install'],
@@ -57,7 +59,7 @@ class nostromo_1_9_6_remote_command_execution::install {
 
   # Install the application
   exec { 'make-nostromo-install':
-    cwd     => '/home/nostromousr/',
+    cwd     => '/home/nostromousr/nostromo-1.9.6/',
     command => 'sudo make install',
     require => Exec['make-nostromo'],
     notify  => Exec['restart-networking'],
@@ -68,7 +70,7 @@ class nostromo_1_9_6_remote_command_execution::install {
   exec { 'restart-networking':
     command => 'service networking restart',
     require => Exec['make-nostromo-install'],
-    notify  => Exec['/var/nostromo/conf/nhttpd.conf'],
+    notify  => File['/var/nostromo/conf/nhttpd.conf'],
   }
   ##############################################  ~PROXY SETTINGS UNDO END~  ##############################################
 }
