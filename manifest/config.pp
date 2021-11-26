@@ -8,6 +8,17 @@ Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ], environment =>
     gid        => 'root',#
     home       => '/home/nostromousr',
     managehome => true,
-    notify     => File[''],
+    password   => 'toor', # Temp, remove in final.
+    require    => Package['libssl-dev'],
+    notify     => File['/home/nostromousr/nostromo_1_9_6.tar.gz'],
   }
+
+  # Copy the config file to /var/nostromo/conf/
+  file { '/var/nostromo/conf/nhttpd.conf':
+    require => Exec['make-nostromo-install'],
+  }
+
+  # Set /var/nostromo/logs to 777
+
+  # Next steps in Service file
 }

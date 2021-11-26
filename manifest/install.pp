@@ -18,14 +18,48 @@ class nostromo_1_9_6_remote_command_execution::install {
     notify => Package['gcc'],
   }
   package { 'gcc':
-    ensure => installed,
-    notify => Package['libssl-dev'],
+    ensure  => installed,
+    require => Package['make'],
+    notify  => Package['libssl-dev'],
   }
   package { 'libssl-dev':
-    ensure => installed,
-    notify => Package['nostromousr'],
+    ensure  => installed,
+    require => Package['gcc'],
+    notify  => Package['nostromousr'],
   }
   ensure_packages('make', 'gcc', 'libssl-dev')
 
+  # Move tar ball to /home/user/
+  file { '/home/nostromousr/nostromo_1_9_6.tar.gz':
+    source  => '/home/unhcegila/puppet-modules/nostromo_1_9_6_remote_command_execution/files/nostromo_1_9_6.tar.gz',
+    owner   => 'nostromousr',
+    mode    => '0777',
+    require => User['nostromousr'],
+    notify  => Exec['mellow-file'],
+  }
 
+  # Extract the tar ball
+  exec { 'mellow-file':
+    cwd     => '/home/nostromousr/',
+    command => 'tar -xzvf nostromo_1_9_6.tar.gz',
+    creates => '/home/nostromousr/nostromo-1.9.6/',
+    require => File['/home/nostromousr/nostromo_1_9_6.tar.gz'],
+    notify  => Exec['make-nostromo'],
+  }
+
+  # Make the application
+  exec { 'make-nostromo':
+    cwd     => '/home/nostromousr/',
+    command => 'sudo make',
+    require => Exec['mellow-file'],
+    notify  => Exec['make-nostromo-install'],
+  }
+
+  # Install the application
+  exec { 'make-nostromo-install':
+    cwd     => '/home/nostromousr/',
+    command => 'sudo make install',
+    require => Exec['make-nostromo'],
+    notify  => Exec['/var/nostromo/conf/nhttpd.conf'],
+  }
 }
