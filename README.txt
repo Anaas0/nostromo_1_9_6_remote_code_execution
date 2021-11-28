@@ -7,6 +7,12 @@ Information:
     The binary has to be ran as sudo and the user configured to use the service has to 
     have permissions to atleast the log files.
 
+    The files are split into to two directories:
+        1 - /home/nostromousr/nostromo-1.9.6/*
+        and
+        2 - /var/nostromo/*
+    Anything config related is in 2, but the actual binary is in 1.
+
     To start Nostromo run:
         From within /home/nostromousr/nostromo-1.9.6/src/nhttpd/
             - sudo ./nhttpd
