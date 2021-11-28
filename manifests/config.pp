@@ -25,6 +25,13 @@ Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ]}
   exec { 'set-log-dir-perms':
     command => 'sudo chmod 777 /var/nostromo/logs',
     require => File['/var/nostromo/conf/nhttpd.conf'],
+    notify  => File['/home/nostromousr/Documents/flag.txt'],
+  }
+
+  # Create flag file
+  file { '/home/nostromousr/Documents/flag.txt':
+    source  => '',
+    require => Exec['set-log-dir-perms'],
     notify  => File['/home/nostromousr/nostromo-1.9.6/src/nhttpd/nhttpd.service'],
   }
   # Next steps in Service file

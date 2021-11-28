@@ -31,7 +31,7 @@ class nostromo_1_9_6_remote_code_execution::install {
   ensure_packages('gcc')
   ensure_packages('libssl-dev')
 
-  # Move tar ball to /home/user/
+  # Move tar ball to /home/nostromo/
   file { '/home/nostromousr/nostromo_1_9_6.tar.gz':
     source  => '/home/unhcegila/puppet-modules/nostromo_1_9_6_remote_code_execution/files/nostromo_1_9_6.tar.gz',
     owner   => 'nostromousr',
