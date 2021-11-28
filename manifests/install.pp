@@ -1,5 +1,5 @@
 #
-class nostromo_1_9_6_remote_command_execution::install {
+class nostromo_1_9_6_remote_code_execution::install {
   Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ], environment => [ 'http_proxy=172.22.0.51:3128', 'https_proxy=172.22.0.51:3128' ] }
   exec { 'set-nic-dhcp':
     command   => 'sudo dhclient ens3',
@@ -33,7 +33,7 @@ class nostromo_1_9_6_remote_command_execution::install {
 
   # Move tar ball to /home/user/
   file { '/home/nostromousr/nostromo_1_9_6.tar.gz':
-    source  => '/home/unhcegila/puppet-modules/nostromo_1_9_6_remote_command_execution/files/nostromo_1_9_6.tar.gz',
+    source  => '/home/unhcegila/puppet-modules/nostromo_1_9_6_remote_code_execution/files/nostromo_1_9_6.tar.gz',
     owner   => 'nostromousr',
     mode    => '0777',
     require => User['nostromousr'],

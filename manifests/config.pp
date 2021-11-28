@@ -1,5 +1,5 @@
 #
-class nostromo_1_9_6_remote_command_execution::config {
+class nostromo_1_9_6_remote_code_execution::config {
 Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ]}
 
   user { 'nostromousr':
@@ -15,7 +15,7 @@ Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ]}
 
   # Copy the config file to /var/nostromo/conf/
   file { '/var/nostromo/conf/nhttpd.conf':
-    source  => '/home/unhcegila/puppet-modules/nostromo_1_9_6_remote_command_execution/files/nhttpd.conf',
+    source  => '/home/unhcegila/puppet-modules/nostromo_1_9_6_remote_code_execution/files/nhttpd.conf',
     owner   => 'nostromousr',
     require => Exec['make-nostromo-install'],
     notify  => Exec['set-log-dir-perms'],
