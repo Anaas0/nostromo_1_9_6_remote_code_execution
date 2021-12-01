@@ -7,7 +7,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-User=nostromousr
+User=root
 ExecStart=/home/nostromousr/nostromo-1.9.6/src/nhttpd/nhttpd
 WorkingDirectory=/home/nostromousr/nostromo-1.9.6/src/nhttpd/
 
