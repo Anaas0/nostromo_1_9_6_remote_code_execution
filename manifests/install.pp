@@ -28,7 +28,7 @@ class nostromo_1_9_6_remote_code_execution::install {
     source  => 'puppet:///modules/nostromo_1_9_6_remote_code_execution/nostromo_1_9_6.tar.gz',
     owner   => $user,
     mode    => '0777',
-    require => User["${user}"],
+    require => User[$user],
     notify  => Exec['mellow-file'],
   }
 
