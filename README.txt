@@ -1,6 +1,4 @@
-Current Module State:
-    Service file is not currently working on the Linux side of things for reasons unknown to me at this point.
-    Puppet module is fully working apart from the service aspect. Runs and installs the application fine.
+Current Module State: FULLY WORKING
     Can use localhost or the VMs IP for the web server just have to change nhttpd.conf accordingly.
 
 Information:
