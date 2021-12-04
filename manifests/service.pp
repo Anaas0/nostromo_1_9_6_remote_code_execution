@@ -23,12 +23,18 @@ class nostromo_1_9_6_remote_code_execution::service {
     owner   => 'nostromousr',
     mode    => '0777',
     require => File["${release_dir}/nhttpd.service"],
+    notify  => Exec['run-nhttpd'],
+  }
+
+  exec { 'run-nhttpd':
+    command => "sudo /home/${user}/nostromo-1.9.6/src/nhttpd/nhttpd",
     notify  => Service['nhttpd'],
+    require => File["${service_file_dir}/nhttpd.service"],
   }
 
   service { 'nhttpd':
     ensure  => running,
     enable  => true,
-    require => File["${service_file_dir}/nhttpd.service"],
+    require => Exec['run-nhttpd'],
   }
 }
